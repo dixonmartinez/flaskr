@@ -1,6 +1,10 @@
+from . import auth
+from . import blog
+from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField
+from flask_wtf import FlaskForm
 import os
-from flask import Flask, render_template, request
-from flaskr import blog
+from flask import Flask, render_template, request, flash
 
 
 def create_app(test_config=None):
@@ -9,6 +13,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flasker.sqlite'),
+        DEBUG=True
     )
 
     if test_config is None:
@@ -39,9 +44,26 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from . import auth
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
+    @app.route('/name', methods=['GET', 'POST'])
+    def name():
+        name = None
+        form = NameForm()
+        # validate form
+        if form.validate_on_submit():
+            name = form.name.data
+            form.name.data = ''
+            flash("Form Submitted Successfull")
+        return render_template('name.html', name=name, form=form)
+
     return app
+
+# Create a form class
+
+
+class NameForm(FlaskForm):
+    name = StringField("What's Your Name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
