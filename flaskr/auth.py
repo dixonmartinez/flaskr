@@ -73,3 +73,7 @@ def login_required(view):
             return redirect(url_for('auth.login'))
         return view(**kargs)
     return wrapped_view
+
+@bp.route('/profile/<user>')
+def profile(user):
+    return render_template('profile.html', user=user)
