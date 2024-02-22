@@ -23,8 +23,15 @@
         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
       >
         <li>
-          <a href="{{url_for('name')}}" class="nav-link px-2 text-white"
+          <a
+            href="{{url_for('tutorial.index')}}"
+            class="nav-link px-2 text-white"
             >Name</a
+          >
+        </li>
+        <li>
+          <a href="{{url_for('users.index')}}" class="nav-link px-2 text-white"
+            >Users</a
           >
         </li>
       </ul>

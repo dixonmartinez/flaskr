@@ -1,0 +1,36 @@
+{%extends 'base.html'%} {%block content%}
+<h1>User List</h1>
+
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+  <form method="post">
+    {{form.hidden_tag()}} {{form.name.label(class="form-label")}}
+    {{form.name(class="form-control")}} {{form.email.label(class="form-label")}}
+    {{form.email(class="form-control")}}
+    <br />
+    {{form.submit(class="btn btn-primary")}}
+  </form>
+</div>
+<br /><br />
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for user in users_list%}
+    <tr>
+      <th scope="row">{{ user.id }}</th>
+      <td>
+        <a href="{{url_for('users.update', id=user.id)}}">{{ user.name}}</a>
+      </td>
+      <td>{{user.email}}</td>
+      <td>{{user.email}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+{%endblock%}

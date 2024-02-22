@@ -4,3 +4,4 @@ coverage
 pytest
 watchdog
 flask-sqlalchemy
+flask-migrate

@@ -4,7 +4,7 @@
 >
 <div class="content">
   <h2>This is the posts Flask blueprint</h2>
-  {% for post in posts %}
+  {% for post in items_on_page %}
   <div class="post">
     <p><b>#{{ post.id }}</b></p>
     <p class="title">
@@ -17,6 +17,12 @@
     </div>
     <hr />
   </div>
-  {% endfor %}
+  {% endfor %} {%if page > 1 %}
+  <a href="{{url_for('index', page=page-1)}}">Previous</a>
+  {% endif %}
+  <span>Page {{page}} of {{total_pages}}</span>
+  {%if page < total_pages %}
+  <a href="{{url_for('index', page=page+1)}}">Next</a>
+  {% endif %}
 </div>
 {% endblock %}
