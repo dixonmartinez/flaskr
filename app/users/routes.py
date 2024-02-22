@@ -1,4 +1,4 @@
-from flask import render_template, flash, request
+from flask import render_template, flash, request, redirect, url_for
 from wtforms.validators import DataRequired
 from wtforms import StringField, SubmitField, EmailField
 from flask_wtf import FlaskForm
@@ -44,6 +44,19 @@ def update(id):
                 flash('Error! Looks like there was a problem... try again!')
                 return render_template('users/update.html', form=form, user=user)
     return render_template('users/update.html', form=form, user=user)
+
+
+@bp.route('/delete/<int:id>', methods=['GET', 'POST'])
+def delete(id):
+    user = Users.query.get_or_404(id)
+    print(user)
+    try:
+        db.session.delete(user)
+        db.session.commit()
+        flash('User deleted successfully!!')
+    except:
+        flash('Woops!! There was a problem deleting user, try again...')
+    return redirect(url_for('users.index'))
 
 # Create a User Form Class
 
