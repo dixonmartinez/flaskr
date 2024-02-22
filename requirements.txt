@@ -3,3 +3,4 @@ flask-wtf
 coverage
 pytest
 watchdog
+flask-sqlalchemy
