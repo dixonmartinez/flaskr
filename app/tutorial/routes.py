@@ -16,6 +16,14 @@ def index():
         flash("Form Submitted Successfull")
     return render_template('tutorial/index.html', name=name, form=form)
 
+
+@bp.route('/time')
+def time():
+    from datetime import datetime
+    return {
+        "Date": datetime.now()
+    }
+
 # a simple page that says hello
 
 

@@ -36,7 +36,7 @@ def index():
 
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
+def update(id:int):
     form = UserForm()
     user = Users.query.get_or_404(id)
     if request.method == 'POST':
