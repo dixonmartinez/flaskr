@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired
 from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 
+
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     name = None
@@ -28,3 +29,13 @@ def hello():
 class NameForm(FlaskForm):
     name = StringField("What's Your Name", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+    """
+    flask-migrate
+    flask db
+    flask db init
+    flask db migrate -m 'Initial MIgration'
+    flask db upgrade
+    flask db migrate -m 'Added somthing'
+
+    """

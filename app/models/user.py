@@ -8,7 +8,8 @@ class Users(db.Model):
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(20), nullable=False, unique=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
+    password = db.Column(db.String(50), nullable=False)
 
     # Create A String
     def __repr__(self):
-        return f"<Name {self.name}"
+        return f"<Name: {self.name}>"
