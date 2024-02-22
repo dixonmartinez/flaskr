@@ -32,6 +32,7 @@ class NameForm(FlaskForm):
 
     """
     flask-migrate
+    https://flask-migrate.readthedocs.io/en/latest/
     flask db
     flask db init
     flask db migrate -m 'Initial MIgration'

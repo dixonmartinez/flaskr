@@ -1,7 +1,9 @@
 from flask import render_template, flash, request, redirect, url_for
-from wtforms.validators import DataRequired
-from wtforms import StringField, SubmitField, EmailField
+from wtforms.validators import DataRequired, EqualTo, Length
+from wtforms import StringField, SubmitField, EmailField, PasswordField, BooleanField, ValidationError
 from flask_wtf import FlaskForm
+from werkzeug.security import generate_password_hash
+
 from app.users import bp
 from app.models.user import Users
 from app.extensions import db
@@ -16,14 +18,19 @@ def index():
     if form.validate_on_submit():
         email = form.email.data
         name = form.name.data
+        password_hash = form.password_hash.data
         user = Users.query.filter_by(email=email).first()
         if user is None:
-            user = Users(name=name, email=email)
+            user = Users(name=name, email=email,
+                         password_hash=generate_password_hash(password_hash))
             db.session.add(user)
             db.session.commit()
             flash("User Added Successfully!")
+        else:
+            flash(f"User {user.email} is found!!")
         form.name.data = ''
         form.email.data = ''
+        form.password_hash.data = ''
     users_list = Users.query.order_by(Users.created)
     return render_template('users/index.html', form=form, name=name, email=email, users_list=users_list)
 
@@ -64,4 +71,9 @@ def delete(id):
 class UserForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired()])
+    password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo(
+        'password_hash2', message='Passwor Must Match!')])
+    password_hash2 = PasswordField(
+        'Confirm Password', validators=[DataRequired()])
+
     submit = SubmitField('Submit')
