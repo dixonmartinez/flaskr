@@ -11,14 +11,7 @@
     />
   </head>
   <body>
-    {%include 'navbar.html'%}
-    <nav>
-      <a href="{{ url_for('main.index') }}">FlaskApp</a>
-      <a href="{{ url_for('posts.index') }}">Posts</a>
-      <a href="{{ url_for('posts.categories') }}">Categories</a>
-      <a href="{{ url_for('questions.index') }}">Questions</a>
-    </nav>
-    {%for message in get_flashed_messages()%}
+    {%include 'navbar.html'%} {%for message in get_flashed_messages()%}
     <div class="alert alert-primary alert-dismissible fade show" role="alert">
       {{message}}
       <button
