@@ -4,6 +4,10 @@ from app.posts import bp
 from app.extensions import db
 from app.models.post import Post
 from app.auth.routes import login_required
+from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired #, EqualTo, Length
+from wtforms import StringField, SubmitField # EmailField, PasswordField, BooleanField, ValidationError
+from wtforms.widgets import TextArea
 
 
 @bp.route('/categories/')
@@ -19,6 +23,7 @@ def index():
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()"""
+    print(posts)
     page = request.args.get('page', 1, type=int)
     per_page = 5
     start = (page - 1) * per_page
@@ -28,9 +33,37 @@ def index():
     return render_template('posts/index.html', items_on_page=items_on_page, total_pages=total_pages, page=page)
 
 
-@bp.route('/create', methods=('GET', 'POST'))
-@login_required
-def create():
+@bp.route('/add-post', methods=('GET', 'POST'))
+# @login_required
+def add_post():
+    form = PostForm()
+    # validate form
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        slug = form.slug.data
+        # author_id = form.author_id.data
+        # clear the form
+        form.title.data = ''
+        form.content.data = ''
+        form.slug.data = ''
+        form.author_id.data = ''
+        if not title:
+            pass  # error = 'Title is required.'
+        post = Post(title=title, content=content,
+                    slug=slug, author_id=1)
+        # Add data post to database
+        db.session.add(post)
+        db.session.commit()
+        # Return a flash message
+        flash("Post Added Successfully!")
+        # Redirect to the post index
+        return redirect(url_for('posts.index'))
+    # Return create post page
+    return render_template('posts/add-post.html', form=form)
+
+
+"""
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
@@ -48,9 +81,8 @@ def create():
                 (title, body, g.user['id'])
             )
             db.commit()
-            return redirect(url_for('blog.index'))
-
-    return render_template('blog/create.html')
+            return redirect(url_for('posts.index'))
+"""
 
 
 def get_post(id, check_author=True):
@@ -71,7 +103,7 @@ def get_post(id, check_author=True):
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def update(id):
     post = get_post(id)
 
@@ -98,7 +130,7 @@ def update(id):
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
-@login_required
+# @login_required
 def delete(id):
     get_post(id)
     db.execute('DELETE FROM post WHERE id = ?', (id,))
@@ -132,3 +164,14 @@ Formatear los posts usando Markdown.
 
 Una fuente RSS de nuevos mensajes.
 """
+
+# Create form posts
+
+
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = StringField('Content', validators=[
+                          DataRequired()], widget=TextArea())
+    slug = StringField('Slug', validators=[DataRequired()])
+    author_id = StringField('Author', validators=[DataRequired()])
+    submit = SubmitField('Submit')
