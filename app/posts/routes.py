@@ -3,7 +3,7 @@ from flask_login import login_required
 from werkzeug.exceptions import abort
 from app.posts import bp
 from app.extensions import db
-from app.models.post import Post
+from app.models.posts import Posts
 # from app.auth.routes import login_required
 from app.web_forms import PostForm
 from flask_login import current_user
@@ -17,7 +17,7 @@ def categories():
 @bp.route('/')
 def index():
     # Grab all posts from the database
-    posts = Post.query.order_by(Post.date_posted)
+    posts = Posts.query.order_by(Posts.date_posted)
     # page = request.args.get('page', 1, type=int)
     # per_page = 5
     # start = (page - 1) * per_page
@@ -39,7 +39,7 @@ def add_post():
         title = form.title.data
         content = form.content.data
         slug = form.slug.data
-        # author_id = form.author_id.data
+        author = current_user.id
         # clear the form
         form.title.data = ''
         form.content.data = ''
@@ -47,8 +47,8 @@ def add_post():
         form.author_id.data = ''
         if not title:
             pass  # error = 'Title is required.'
-        post = Post(title=title, content=content,
-                    slug=slug, author_id=1)
+        post = Posts(title=title, content=content,
+                     slug=slug, author_id=author)
         # Add data post to database
         db.session.add(post)
         db.session.commit()
@@ -61,12 +61,12 @@ def add_post():
 
 
 def get_post(id, check_author=True):
-    post = Post.query.get_or_404(id)
-
+    post = Posts.query.get_or_404(id)
+    print(post)
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != current_user.id:
+    if check_author and post.author_id != current_user.id:
         abort(403)
     return post
 

@@ -3,7 +3,7 @@ from config import Config
 from app.extensions import db
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_required
-from app.models.user import Users
+from app.models.users import Users
 # export FLASK_APP=app
 # export FLASK_ENV=development
 
@@ -17,7 +17,7 @@ def create_app(config_class=Config):
     migrate = Migrate(app, db)
     login_manager = LoginManager()
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'users.login'
 
     @login_manager.user_loader
     def load_user(user_id):

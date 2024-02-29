@@ -11,6 +11,8 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(20), nullable=False, unique=True)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     password_hash = db.Column(db.String(128), nullable=False)
+    # Users can have many posts
+    posts = db.relationship('Posts', backref='author')
 
     @property
     def password(self):

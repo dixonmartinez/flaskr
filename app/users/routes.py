@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 
 from app.users import bp
-from app.models.user import Users
+from app.models.users import Users
 from app.extensions import db
 from app.web_forms import UserForm, UserEditForm, LoginForm
 
@@ -26,11 +26,24 @@ def register():
         elif email is None:
             error = 'Email is required.'
         else:
-            user = Users(name=name, username=username, password_hash=generate_password_hash(
-                password_hash), email=email)
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('dashboard'))
+            user = Users.query.filter_by(username=username).first()
+            if user:
+                flash('That User Exists! Try Again...!')
+                if not current_user:
+                    return redirect(url_for('users.login'))
+            else:
+                user = Users(name=name, username=username, password_hash=generate_password_hash(
+                    password_hash), email=email)
+                try:
+                    db.session.add(user)
+                    db.session.commit()
+                    # login_user(user)
+                    flash('Users Added Successful...!')
+                    if not current_user:
+                        return redirect(url_for('users.login'))
+                    return redirect(url_for('users'))
+                except:
+                    flash('That User Doesn\'t Exists! Try Again...!')
         if error:
             flash(error)
     return render_template('users/add-user.html', form=form)
@@ -91,6 +104,7 @@ def dashboard():
 
 
 @bp.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     name = None
     email = None
@@ -117,28 +131,20 @@ def index():
 
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
     form = UserEditForm()
     user = Users.query.get_or_404(id)
-    if form.validate_on_submit():
+    if request.method == 'POST':
         if user:
-            user.name = form.name.data
-            user.username = form.username.data
-            user.email = form.email.data
-            # Clear the form
-            form.name.data = ''
-            form.username.data = ''
-            form.email.data = ''
+            user.name = request.form['name']
+            user.username = request.form['username']
+            user.email = request.form['email']
             try:
-                db.session.add(user)
                 db.session.commit()
-                flash('User updated Successfully!')
+                flash('User Updated Successfully!')
             except:
                 flash('Error! Looks like there was a problem... try again!')
-        else:
-            flash('Error! User not found... try again!')
-    elif request.method == 'POST':
-        flash('Error! Form not validated... try again!')
     return render_template('users/update.html', form=form, user=user)
 
 

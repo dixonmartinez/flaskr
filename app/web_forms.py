@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from wtforms.widgets import TextArea
 
 # Create a User Form Class
+
+
 class UserForm(FlaskForm):
     username = StringField('UserName', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
@@ -21,16 +23,20 @@ class UserEditForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
 class LoginForm(FlaskForm):
     username = StringField('UserName', validators=[DataRequired()])
     password_hash = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # Create form posts
+
+
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = StringField('Content', validators=[
                           DataRequired()], widget=TextArea())
     slug = StringField('Slug', validators=[DataRequired()])
-    author_id = StringField('Author', validators=[DataRequired()])
+    author_id = StringField('Author')
     submit = SubmitField('Submit')
