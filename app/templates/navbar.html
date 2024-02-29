@@ -51,12 +51,11 @@
       </form>
 
       <div class="text-end">
-        {% if g.user %}
+        {% if current_user.is_authenticated %}
         <li class="btn btn-outline-light me-2">
-          <!-- <a href="{#{{url_for('profile','name', g.user['username'])#}}}"
-            >--><span>{{g.user['username']}}</span
-          ><!--</a
-          >-->
+          <a href="{{url_for('dashboard')}}"
+            ><span>{{current_user.username}}</span></a
+          >
         </li>
         <li class="btn btn-outline-light me-2">
           <a href="{{url_for('auth.logout')}}">Log Out</a>

@@ -1,8 +1,10 @@
 from flask import render_template, flash, request, redirect, url_for
-from wtforms.validators import DataRequired, EqualTo #, Length
-from wtforms import StringField, SubmitField, EmailField, PasswordField #, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo  # , Length
+# , BooleanField, ValidationError
+from wtforms import StringField, SubmitField, EmailField, PasswordField
 from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 from app.users import bp
 from app.models.user import Users
@@ -36,13 +38,14 @@ def index():
 
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id:int):
+def update(id: int):
     form = UserForm()
     user = Users.query.get_or_404(id)
     if request.method == 'POST':
         if user:
             user.name = request.form['name']
             user.email = request.form['email']
+            user.username=request.form['username']
             try:
                 db.session.commit()
                 flash('User updated Successfully!')
@@ -69,6 +72,7 @@ def delete(id):
 
 
 class UserForm(FlaskForm):
+    username = StringField('UserName', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired()])
     password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo(
