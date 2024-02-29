@@ -1,4 +1,5 @@
 from flask import render_template, request, flash, redirect, url_for
+from flask_login import login_required
 from werkzeug.exceptions import abort
 from app.posts import bp
 from app.extensions import db
@@ -39,7 +40,7 @@ def index():
 
 
 @bp.route('/add-post', methods=('GET', 'POST'))
-# @login_required
+@login_required
 def add_post():
     form = PostForm()
     # validate form
@@ -102,7 +103,7 @@ def get_post(id, check_author=True):
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
-# @login_required
+@login_required
 def update(id):
     post = get_post(id)
     form = PostForm()
@@ -133,7 +134,7 @@ def update(id):
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
-# @login_required
+@login_required
 def delete(id):
     post = get_post(id)
     try:

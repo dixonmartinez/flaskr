@@ -10,42 +10,8 @@ from app.auth import bp
 from app.models.user import Users
 
 
-@bp.route('/')
-def index():
-    pass
 
 
-class LoginForm(FlaskForm):
-    username = StringField('UserName', validators=[DataRequired()])
-    password_hash = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-
-@bp.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.username.data).first()
-        if user:
-            # Check the hash
-            if check_password_hash(user.password_hash, form.password_hash.data):
-                login_user(user)
-                flash('Login successfully...!')
-                return redirect(url_for('dashboard'))
-            else:
-                flash('Wrong Password-Try Again...!')
-        else:
-            flash('That User Doesn\'t Exists! Try Again...!')
-
-    return render_template('auth/login.html', form=form)
-
-
-@bp.route('/logout', methods=['GET', 'POST'])
-@login_required
-def logout():
-    logout_user()
-    flash('You Hava Been Logged Out! Thanks For Stopping By...')
-    return redirect(url_for('index'))
 
 
 @bp.route('/login2', methods=['GET', 'POST'])
@@ -68,29 +34,6 @@ def login2():
     return render_template('auth/login.html')
 
 
-@bp.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        error = None
-        if not username:
-            error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
-        if error is None:
-            try:
-                db.execute("INSERT INTO user(username, password) VALUES(?,?)",
-                           (username, generate_password_hash(password)))
-                db.commit()
-            except db.IntegrityError:
-                error = f"User {username} is already registered"
-            else:
-                return redirect(url_for('auth.login'))
-        flash(error)
-    return render_template('auth/register.html')
-
-
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -107,13 +50,13 @@ def logout2():
     return redirect(url_for('index'))
 
 
-def login_required(view):
+"""def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kargs):
         if g.user is None:
             return redirect(url_for('auth.login'))
         return view(**kargs)
-    return wrapped_view
+    return wrapped_view"""
 
 
 @bp.route('/profile/<user>')

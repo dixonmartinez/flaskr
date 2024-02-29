@@ -39,9 +39,4 @@ def create_app(config_class=Config):
 
     app.add_url_rule('/', endpoint='index')
 
-    @app.route('/dashboard')
-    @login_required
-    def dashboard():
-        return render_template('dashboard.html')
-
     return app

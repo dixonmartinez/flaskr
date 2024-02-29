@@ -1,0 +1,18 @@
+{%extends 'base.html'%} {% block header %}
+<h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %} {% block content %}
+<form method="post">
+  {{form.hidden_tag()}}
+  {{form.name.label(class="form-label")}}
+  {{form.name(class="form-control")}}
+  {{form.username.label(class="form-label")}}
+  {{form.username(class="form-control")}}
+  {{form.email.label(class="form-label")}} {{form.email(class="form-control")}}
+  {{form.password_hash.label(class="form-label")}}
+  {{form.password_hash(class="form-control")}}
+  {{form.password_hash2.label(class="form-label")}}
+  {{form.password_hash2(class="form-control")}}
+  <br />
+  {{form.submit(class="btn btn-primary")}}
+</form>
+{% endblock %}
