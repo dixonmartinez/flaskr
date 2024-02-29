@@ -3,6 +3,7 @@ from wtforms.validators import DataRequired, EqualTo  # , Length
 from wtforms import StringField, SubmitField, EmailField, PasswordField
 from flask_wtf import FlaskForm
 from wtforms.widgets import TextArea
+from flask_ckeditor import CKEditorField
 
 # Create a User Form Class
 
@@ -35,8 +36,8 @@ class LoginForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    content = StringField('Content', validators=[
-                          DataRequired()], widget=TextArea())
+    content = CKEditorField('Content', validators=[
+        DataRequired()])
     slug = StringField('Slug', validators=[DataRequired()])
     author_id = StringField('Author')
     submit = SubmitField('Submit')

@@ -18,7 +18,7 @@
     </div>
 
     {{post.slug }} <br />
-    {{post.content }} <br />
+    {{post.content | safe}} <br />
     {%if current_user.id == post.author_id%}
     <a
       class="btn btn-secondary btn-sm"

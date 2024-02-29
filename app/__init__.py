@@ -1,8 +1,7 @@
 from flask import Flask, render_template
 from config import Config
-from app.extensions import db
-from flask_migrate import Migrate
-from flask_login import LoginManager, login_required
+from app.extensions import db, ckeditor, migrate, login_manager
+
 from app.models.users import Users
 from app.models.posts import Posts
 from app.web_forms import SearchForm
@@ -13,11 +12,10 @@ from app.web_forms import SearchForm
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
-
     # Initialize Flak extensions here
     db.init_app(app)
-    migrate = Migrate(app, db)
-    login_manager = LoginManager()
+    migrate.init_app(app, db)
+    ckeditor.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'users.login'
 
