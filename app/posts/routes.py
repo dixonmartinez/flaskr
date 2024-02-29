@@ -3,10 +3,11 @@ from werkzeug.exceptions import abort
 from app.posts import bp
 from app.extensions import db
 from app.models.post import Post
-from app.auth.routes import login_required
+# from app.auth.routes import login_required
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired #, EqualTo, Length
-from wtforms import StringField, SubmitField # EmailField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import DataRequired  # , EqualTo, Length
+# EmailField, PasswordField, BooleanField, ValidationError
+from wtforms import StringField, SubmitField
 from wtforms.widgets import TextArea
 
 
@@ -17,20 +18,24 @@ def categories():
 
 @bp.route('/')
 def index():
-    posts = Post.query.all()
+    # Grab all posts from the database
+    posts = Post.query.order_by(Post.date_posted)
     """posts = db.execute(
         'SELECT p.id, title, body, SUBSTR(body, 0, 300) AS body_index, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()"""
     print(posts)
-    page = request.args.get('page', 1, type=int)
-    per_page = 5
-    start = (page - 1) * per_page
-    end = start + per_page
-    total_pages = (len(posts) + per_page - 1) // per_page
-    items_on_page = posts[start:end]
-    return render_template('posts/index.html', items_on_page=items_on_page, total_pages=total_pages, page=page)
+    # page = request.args.get('page', 1, type=int)
+    # per_page = 5
+    # start = (page - 1) * per_page
+    # end = start + per_page
+    # total_pages = (len(posts) + per_page - 1) // per_page
+    # items_on_page = posts[start:end]
+    return render_template('posts/index.html',
+                           # items_on_page=items_on_page, total_pages=total_pages, page=page
+                           posts=posts
+                           )
 
 
 @bp.route('/add-post', methods=('GET', 'POST'))
@@ -86,19 +91,13 @@ def add_post():
 
 
 def get_post(id, check_author=True):
-    post = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
-        (id,)
-    ).fetchone()
+    post = Post.query.get_or_404(id)
 
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
-        abort(403)
-
+    # if check_author and post['author_id'] != g.user['id']:
+    #    abort(403)
     return post
 
 
@@ -106,42 +105,51 @@ def get_post(id, check_author=True):
 # @login_required
 def update(id):
     post = get_post(id)
+    form = PostForm()
+    # validate form
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        post.slug = form.slug.data
+        # author_id = form.author_id.data
+        # clear the form
+        form.title.data = ''
+        form.content.data = ''
+        form.slug.data = ''
+        form.author_id.data = ''
+        # Add data post to database
+        db.session.add(post)
+        db.session.commit()
+        # Return a flash message
+        flash("Post updated Successfully!")
+        # Redirect to the post index
+        return redirect(url_for('posts.index'))
+    form.title.data = post.title
+    form.content.data = post.content
+    form.slug.data = post.slug
+    form.author_id.data = post.author_id
 
-    if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
-        error = None
-
-        if not title:
-            error = 'Title is required.'
-
-        if error is not None:
-            flash(error)
-        else:
-            db.execute(
-                'UPDATE post SET title = ?, body = ?'
-                ' WHERE id = ?',
-                (title, body, id)
-            )
-            db.commit()
-            return redirect(url_for('blog.index'))
-
-    return render_template('blog/update.html', post=post)
+    return render_template('posts/update.html', form=form)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 # @login_required
 def delete(id):
-    get_post(id)
-    db.execute('DELETE FROM post WHERE id = ?', (id,))
-    db.commit()
+    post = get_post(id)
+    try:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Blog post was delted!')
+    except:
+        # Return a error
+        flash("Woops! There was a problem delteting post, try again...")
     return redirect(url_for('posts.index'))
 
 
 @bp.route('/<int:id>/show')
 def show(id):
     post = get_post(id)
-    return render_template('blog/show.html', post=post)
+    return render_template('posts/show.html', post=post)
 
 
 """

@@ -1,6 +1,6 @@
 from flask import render_template, flash, request, redirect, url_for
-from wtforms.validators import DataRequired, EqualTo, Length
-from wtforms import StringField, SubmitField, EmailField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo #, Length
+from wtforms import StringField, SubmitField, EmailField, PasswordField #, BooleanField, ValidationError
 from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash
 
