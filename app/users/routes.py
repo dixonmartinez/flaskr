@@ -1,14 +1,11 @@
 from flask import render_template, flash, request, redirect, url_for
-from wtforms.validators import DataRequired, EqualTo  # , Length
-# , BooleanField, ValidationError
-from wtforms import StringField, SubmitField, EmailField, PasswordField
-from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user
 
 from app.users import bp
 from app.models.user import Users
 from app.extensions import db
+from app.web_forms import UserForm, UserEditForm, LoginForm
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -29,20 +26,14 @@ def register():
         elif email is None:
             error = 'Email is required.'
         else:
-            user = Users(name=name, username=username,
-                         password_hash=generate_password_hash(password_hash), email=email)
+            user = Users(name=name, username=username, password_hash=generate_password_hash(
+                password_hash), email=email)
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('dashboard'))
         if error:
             flash(error)
     return render_template('users/add-user.html', form=form)
-
-
-class LoginForm(FlaskForm):
-    username = StringField('UserName', validators=[DataRequired()])
-    password_hash = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -162,23 +153,3 @@ def delete(id):
     except:
         flash('Woops!! There was a problem deleting user, try again...')
     return redirect(url_for('users.index'))
-
-# Create a User Form Class
-
-
-class UserForm(FlaskForm):
-    username = StringField('UserName', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired()])
-    password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo(
-        'password_hash2', message='Passwor Must Match!')])
-    password_hash2 = PasswordField(
-        'Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-
-class UserEditForm(FlaskForm):
-    username = StringField('UserName', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired()])
-    submit = SubmitField('Submit')

@@ -34,8 +34,6 @@ def create_app(config_class=Config):
     app.register_blueprint(tutorial_bp, url_prefix='/tutorial')
     from app.users import bp as users_bp
     app.register_blueprint(users_bp, url_prefix='/users')
-    from app.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/auth')
 
     app.add_url_rule('/', endpoint='index')
 

@@ -1,0 +1,19 @@
+
+Una vista detallada para mostrar una sola entrada. 
+Haga clic en el título de una entrada para ir a su página. Listo
+
+Visualización por páginas. Sólo muestra 5 posts por página. Listo
+
+Me gusta/no me gusta una entrada.
+
+Comentarios.
+
+Etiquetas. Al hacer clic en una etiqueta se muestran todos los mensajes con esa etiqueta.
+
+Una caja de búsqueda que filtra la página del índice por nombre.
+
+Cargar una imagen para acompañar un mensaje.
+
+Formatear los posts usando Markdown.
+
+Una fuente RSS de nuevos mensajes.
