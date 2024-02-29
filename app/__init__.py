@@ -4,6 +4,8 @@ from app.extensions import db
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_required
 from app.models.users import Users
+from app.models.posts import Posts
+from app.web_forms import SearchForm
 # export FLASK_APP=app
 # export FLASK_ENV=development
 
@@ -36,5 +38,10 @@ def create_app(config_class=Config):
     app.register_blueprint(users_bp, url_prefix='/users')
 
     app.add_url_rule('/', endpoint='index')
+    # Pass stuff to navbar
 
+    @app.context_processor
+    def base():
+        form = SearchForm()
+        return dict(form=form)
     return app

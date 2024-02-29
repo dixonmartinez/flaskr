@@ -5,7 +5,7 @@ from app.posts import bp
 from app.extensions import db
 from app.models.posts import Posts
 # from app.auth.routes import login_required
-from app.web_forms import PostForm
+from app.web_forms import PostForm, SearchForm
 from flask_login import current_user
 
 
@@ -120,3 +120,14 @@ def delete(id):
 def show(id):
     post = get_post(id)
     return render_template('posts/show.html', post=post)
+
+
+@bp.route('/search', methods=['POST'])
+def search():
+    form = SearchForm()
+    posts = Posts.query
+    if form.validate_on_submit():
+        searched = form.searched.data
+        posts = posts.filter(Posts.content.like('%' + searched + '%'))
+        posts = posts.order_by(Posts.title).all()
+        return render_template("posts/index.html", form=form, searched=searched, posts=posts)

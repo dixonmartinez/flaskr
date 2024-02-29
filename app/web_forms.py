@@ -40,3 +40,10 @@ class PostForm(FlaskForm):
     slug = StringField('Slug', validators=[DataRequired()])
     author_id = StringField('Author')
     submit = SubmitField('Submit')
+
+# create a search form
+
+
+class SearchForm(FlaskForm):
+    searched = StringField('Searched', validators=[DataRequired()])
+    submit = SubmitField('Submit')
