@@ -1,11 +1,14 @@
 from flask import render_template, flash, request, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, logout_user, current_user
-
+import uuid as uuid
+import os
 from app.users import bp
 from app.models.users import Users
 from app.extensions import db
-from app.web_forms import UserForm, UserEditForm, LoginForm
+from app.web_forms import UserForm, LoginForm
+from flask import current_app
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -16,6 +19,7 @@ def register():
         username = form.username.data
         password_hash = form.password_hash.data
         email = form.email.data
+        about_author = form.about_author.data
         error = None
         if username is None:
             error = 'Username is required.'
@@ -33,7 +37,7 @@ def register():
                     return redirect(url_for('users.login'))
             else:
                 user = Users(name=name, username=username, password_hash=generate_password_hash(
-                    password_hash), email=email)
+                    password_hash), email=email, about_author=about_author)
                 try:
                     db.session.add(user)
                     db.session.commit()
@@ -79,27 +83,39 @@ def logout():
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    form = UserEditForm()
+    form = UserForm()
     user = Users.query.get_or_404(current_user.id)
-    if form.validate_on_submit():
+    print(user.about_author)
+    if request.method == 'POST':
         if user:
-            user.name = form.name.data
-            user.username = form.username.data
-            user.email = form.email.data
-            # Clear the form
-            form.name.data = ''
-            form.username.data = ''
-            form.email.data = ''
+            user.name = request.form['name']
+            user.username = request.form['username']
+            user.email = request.form['email']
+            user.about_author = request.form['about_author']
+            if request.files['profile_pic'].filename:
+                user.profile_pic = request.files['profile_pic']
+                print(user.profile_pic)
+                # Save That Image
+                saver = user.profile_pic
+                # Grab image name
+                pic_filename = secure_filename(saver.filename)
+                file_ext = os.path.splitext(pic_filename)[1]
+                if file_ext not in current_app.config['UPLOAD_EXTENSIONS']:
+                    pass #abort(400)
+                # Set UUID
+                pic_name = str(uuid.uuid1()) + "_" + pic_filename
+                # Change it to string to save to db
+                user.profile_pic = pic_name
+                file_target = os.path.join(
+                    current_app.config['UPLOAD_FOLDER'], pic_name.strip())
+                saver.save(file_target)
             try:
-                db.session.add(user)
                 db.session.commit()
-                flash('User updated Successfully!')
+                flash('User Updated Successfully!')
             except:
                 flash('Error! Looks like there was a problem... try again!')
         else:
             flash('Error! User not found... try again!')
-    elif request.method == 'POST':
-        flash('Error! Form not validated... try again!')
     return render_template('users/dashboard.html', form=form)
 
 
@@ -133,7 +149,7 @@ def index():
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    form = UserEditForm()
+    form = UserForm()
     user = Users.query.get_or_404(id)
     if request.method == 'POST':
         if user:
@@ -149,13 +165,17 @@ def update(id):
 
 
 @bp.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
 def delete(id):
-    user = Users.query.get_or_404(id)
-    print(user)
-    try:
-        db.session.delete(user)
-        db.session.commit()
-        flash('User deleted successfully!!')
-    except:
-        flash('Woops!! There was a problem deleting user, try again...')
-    return redirect(url_for('users.index'))
+    if id == current_user.id:
+        user = Users.query.get_or_404(id)
+        print(user)
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            flash('User deleted successfully!!')
+        except:
+            flash('Woops!! There was a problem deleting user, try again...')
+    else:
+        flash('Sorry, you can\'t delete that user!')
+    return redirect(url_for('dashboard'))

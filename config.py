@@ -12,4 +12,7 @@ class Config():
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')\
         or 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CKEDITOR_PKG_TYPE = 'standard'  # basic, standard, full, standard-all, full-all
+    CKEDITOR_PKG_TYPE = 'standard'  # basic, standard, full, standard-all, full-allç
+    UPLOAD_FOLDER = 'app/static/images/'
+    MAX_CONTENT_LENGTH = 1024 * 1024
+    UPLOAD_EXTENSIONS = ['.jpg', '.png', '.gif']

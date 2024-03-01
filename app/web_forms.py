@@ -1,9 +1,10 @@
 from wtforms.validators import DataRequired, EqualTo  # , Length
 # , BooleanField, ValidationError
-from wtforms import StringField, SubmitField, EmailField, PasswordField
+from wtforms import StringField, SubmitField, EmailField, PasswordField, TextAreaField
 from flask_wtf import FlaskForm
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
+from flask_wtf.file import FileField
 
 # Create a User Form Class
 
@@ -12,17 +13,12 @@ class UserForm(FlaskForm):
     username = StringField('UserName', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired()])
+    about_author = TextAreaField('About Author')
     password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo(
         'password_hash2', message='Passwor Must Match!')])
     password_hash2 = PasswordField(
         'Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-
-class UserEditForm(FlaskForm):
-    username = StringField('UserName', validators=[DataRequired()])
-    name = StringField('Name', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired()])
+    profile_pic = FileField("Profile Pic")
     submit = SubmitField('Submit')
 
 

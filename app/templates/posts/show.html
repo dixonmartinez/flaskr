@@ -1,4 +1,55 @@
 {% extends 'base.html' %} {% block header %} {% endblock %} {% block content %}
+<br />
+<div class="shadow p-3 mb-5 bg-body rounded">
+  <h2>{{post.title}}</h2>
+  <small
+    >By: {{post.author.name}}<br />{{post.date_posted.strftime('%Y-%m-%d')}}</small
+  ><br /><br />{{post.content| safe}} <br /><br />
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        {% if current_user.profile_pic %}
+        <img
+          src="{{url_for('static', filename='images/'+current_user.profile_pic)}}"
+          width="150"
+          align="left"
+        />
+        {%else %}
+        <img
+          src="{{url_for('static', filename='images/user.jpg')}}"
+          width="150"
+          align="left"
+        />
+        {%endif%}
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{post.author.name}}</h5>
+          <p class="card-boyd">
+            {%if post.author.about_author%} {{post.author.about_author}}
+            {%endif%}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% if current_user.id == post['author_id'] %}
+<a
+  class="btn btn-outline-secondary btn-sm"
+  href="{{ url_for('posts.update', id=post.id) }}"
+  >Edit Post</a
+>
+<a
+  class="btn btn-outline-danger btn-sm"
+  href="{{ url_for('posts.delete', id=post.id) }}"
+  >Delete Post</a
+>
+{% endif %}
+<a class="btn btn-outline-secondary btn-sm" href="{{ url_for('posts.index') }}"
+  >Back To Blog</a
+>
+
 <article class="post">
   <header>
     <div>
@@ -8,12 +59,6 @@
         }}
       </div>
     </div>
-    <a class="action" href="{{ url_for('posts.index') }}">Back</a>
-    {% if g.user['id'] == post['author_id'] %}
-    <a class="action" href="{{ url_for('blog.update', id=post['id']) }}"
-      >Edit</a
-    >
-    {% endif %}
   </header>
   <p class="body">{{ post['body'] }}</p>
 </article>
