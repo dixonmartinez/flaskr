@@ -1,12 +1,16 @@
-{% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Log In{% endblock %}</h1>
-{% endblock %} {% block content %}
-<form method="post">
-  {{form.hidden_tag()}} {{form.username.label(class="form-label")}}
-  {{form.username(class="form-control")}}
-  {{form.password_hash.label(class="form-label")}}
-  {{form.password_hash(class="form-control")}}
-  <br />
-  {{form.submit(class="btn btn-primary")}}
-</form>
+{% extends 'base_auth.html' %} {% block content %}
+<div class="auth-content">
+  <form method="post">
+    <h2 class="form-title">
+      {% block header %}{% block title %}Log In{% endblock %} {% endblock %}
+    </h2>
+    {{form.hidden_tag()}}
+    <div>{{form.username.label()}} {{form.username(class="text-input")}}</div>
+    <div>
+      {{form.password_hash.label()}}{{form.password_hash(class="text-input")}}
+    </div>
+    <div>{{form.submit(class="btn btn-big")}}</div>
+    <p>Or <a href="{{url_for('users.register')}}">Sign Up</a></p>
+  </form>
+</div>
 {% endblock %}

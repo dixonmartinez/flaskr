@@ -2,24 +2,363 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} {% endblock %} - FlaskApp</title>
+
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Candal Lora Family Offline
+    <link rel="stylesheet" href="css/Candal/Candal-Regular.ttf" />
+    <link rel="stylesheet" href="css/Lora/Lora-Italic-VariableFont_wght.ttf" />-->
+    <!-- Candal Lora Family -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Candal&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
       rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  </head>
-  <body>
-    <div class="container">
-      {%include 'navbar.html'%} {%include 'flash_messages.html'%} {% block
-      content %} {% endblock %} {%include 'footer.html'%}
-    </div>
+    <!-- Slick Offline
+    <link rel="stylesheet" href="css/slick.css" />-->
+    <!-- Slick -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <!--Font Awesome Offline-->
+    <!--Font Awesome-->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      src="https://kit.fontawesome.com/899ccfbf88.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Custom Styling-->
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/style.css')}}"
+    />
+  </head>
+  <body>
+    {%include 'navbar.html'%}
+    <!--{%include 'flash_messages.html'%} {% block
+    content %} {% endblock %} {%include 'footer.html'%}-->
+    <!-- Page Wraper-->
+    <div class="page-wrapper">
+      <!-- Post Slider -->
+      <div class="post-slider">
+        <h1 class="slider-title">Trending Posts</h1>
+        <i class="fas fa-chevron-left prev"></i>
+        <i class="fas fa-chevron-right next"></i>
+        <div class="post-wrapper">
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >1.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >2.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >3.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >4.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >5.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+
+          <div class="post">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="slider-image"
+            />
+            <div class="post-info">
+              <h4>
+                <a href="http://single.html"
+                  >6.- One day your life will flash before your eyes</a
+                >
+              </h4>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // Post Slider -->
+
+      <!-- Content -->
+      <div class="content clearfix">
+        <!--// Main Content-->
+        <div class="main-content">
+          <h1 class="recent-post-title">Recent Posts</h1>
+          <div class="post clearfix">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="post-image"
+            />
+            <div class="post-preview">
+              <h2>
+                <a href="single.html"
+                  >The strong and sweetest songs yet remain to be sung</a
+                >
+              </h2>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+            <p class="preview-text">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
+              blanditiis eligendi veniam assumenda iure id.
+            </p>
+            <a href="single.html" class="btn read-more">Read More</a>
+          </div>
+
+          <div class="post clearfix">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="post-image"
+            />
+            <div class="post-preview">
+              <h2>
+                <a href="single.html"
+                  >The strong and sweetest songs yet remain to be sung</a
+                >
+              </h2>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+            <p class="preview-text">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
+              blanditiis eligendi veniam assumenda iure id.
+            </p>
+            <a href="single.html" class="btn read-more">Read More</a>
+          </div>
+
+          <div class="post clearfix">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="post-image"
+            />
+            <div class="post-preview">
+              <h2>
+                <a href="single.html"
+                  >The strong and sweetest songs yet remain to be sung</a
+                >
+              </h2>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+            <p class="preview-text">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
+              blanditiis eligendi veniam assumenda iure id.
+            </p>
+            <a href="single.html" class="btn read-more">Read More</a>
+          </div>
+
+          <div class="post clearfix">
+            <img
+              src="{{url_for('static', filename='images/Post.png')}}"
+              alt=""
+              class="post-image"
+            />
+            <div class="post-preview">
+              <h2>
+                <a href="single.html"
+                  >The strong and sweetest songs yet remain to be sung</a
+                >
+              </h2>
+              <i class="far fa-user"></i>Awa Melvine &nbsp;
+              <i class="far fa-calendar"></i>Mar 8, 2024
+            </div>
+            <p class="preview-text">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
+              blanditiis eligendi veniam assumenda iure id, delectus nam commodi
+              reprehenderit fugit aliquid fuga deleniti architecto aperiam
+              accusamus quae unde ut.
+            </p>
+            <a href="single.html" class="btn read-more">Read More</a>
+          </div>
+        </div>
+        <!--// Main Content-->
+        <div class="sidebar">
+          <div class="section search">
+            <h2 class="section-title">Search</h2>
+            <form action="index.html" method="post">
+              <input
+                type="text"
+                name="search-term"
+                class="text-input"
+                placeholder="Search..."
+              />
+            </form>
+          </div>
+          <div class="section topics">
+            <h2 class="section-title">Topics</h2>
+            <ul>
+              <li><a href="#">Poems</a></li>
+              <li><a href="#">Quootes</a></li>
+              <li><a href="#">Fiction</a></li>
+              <li><a href="#">Biography</a></li>
+              <li><a href="#">Motivation</a></li>
+              <li><a href="#">Inspiration</a></li>
+              <li><a href="#">Life Lessons</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--// Content-->
+    </div>
+    <!--// Page Wraper-->
+
+    <!-- footer -->
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-section about">
+          <h1 class="logo-text"><span>Awa</span>Inspires</h1>
+          <p>
+            Awainspires is a fictional blog conceived for the purpose of a
+            tutorial on Youtube. However, Awa has a blog called piccofadvice.org
+            where writes truly inspiring stuff
+          </p>
+          <div class="contact">
+            <span><i class="fas fa-phone"></i>&nbsp;123.156.123</span>
+            <span
+              ><i class="fas fa-envelope"></i>&nbsp;info@awainspieres.com</span
+            >
+          </div>
+          <div class="socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section links">
+          <h2>Quick Links</h2>
+          <br />
+          <ul>
+            <a href="#"><li>Events</li></a>
+            <a href="#"><li>Team</li></a>
+            <a href="#"><li>Mentores</li></a>
+            <a href="#"><li>Gallery</li></a>
+            <a href="#"><li>Term and Conditions</li></a>
+          </ul>
+        </div>
+        <div class="footer-section contact-form">
+          <h2>Contact us</h2>
+          <br />
+          <form action="index.html">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="text-input contact-input"
+              placeholder="Your email address..."
+            />
+            <textarea
+              class="text-input contact-input"
+              name="message"
+              rows="4"
+              placeholder="Your message..."
+            ></textarea>
+            <button type="submit" class="btn btn-big contact-btn">
+              <i class="fas fa-envelope"></i> Send
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; codingpoets.com | Design by Awa Melvine
+      </div>
+    </div>
+    <!-- // footer -->
+    <!-- JQuery Offline
+    <script src="js/jquery-3.7.1.min.js"></script>-->
+    <!-- JQuery -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!--slick Carousel Offline
+    <script src="js/slick.min.js"></script>-->
+    <!--slick Carousel -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+    <!--Custom script-->
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
   </body>
 </html>

@@ -1,23 +1,29 @@
-{%extends 'base.html'%} {% block content %}
-<div class="card">
-  <div class="card-header">
-    <h2>{% block title %}Register User{% endblock %}</h2>
-  </div>
-  <div class="card-body">
-    <form method="post">
-      {{form.hidden_tag()}} {{form.name.label(class="form-label")}}
-      {{form.name(class="form-control")}}
+{% extends 'base_auth.html' %} {% block content %}
+<div class="auth-content">
+  <form method="post">
+    <h2 class="form-title">
+      {% block header %}{% block title %}Register{% endblock %} {% endblock %}
+    </h2>
+    {{form.hidden_tag()}}
+    <div>{{form.name.label()}} {{form.name(class="text-input")}}</div>
+    <div>
       {{form.username.label(class="form-label")}}
-      {{form.username(class="form-control")}}
+      {{form.username(class="text-input")}}
+    </div>
+    <div>
       {{form.email.label(class="form-label")}}
-      {{form.email(class="form-control")}}
+      {{form.email(class="text-input")}}
+    </div>
+    <div>
       {{form.password_hash.label(class="form-label")}}
-      {{form.password_hash(class="form-control")}}
+      {{form.password_hash(class="text-input")}}
+    </div>
+    <div>
       {{form.password_hash2.label(class="form-label")}}
-      {{form.password_hash2(class="form-control")}}
-      <br />
-      {{form.submit(class="btn btn-primary")}}
-    </form>
-  </div>
+      {{form.password_hash2(class="text-input")}}
+    </div>
+    <div>{{form.submit(class="btn btn-big")}}</div>
+    <p>Or <a href="{{url_for('users.login')}}">Sign In</a></p>
+  </form>
 </div>
 {% endblock %}
