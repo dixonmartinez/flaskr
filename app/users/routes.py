@@ -101,7 +101,7 @@ def dashboard():
                 pic_filename = secure_filename(saver.filename)
                 file_ext = os.path.splitext(pic_filename)[1]
                 if file_ext not in current_app.config['UPLOAD_EXTENSIONS']:
-                    pass #abort(400)
+                    pass  # abort(400)
                 # Set UUID
                 pic_name = str(uuid.uuid1()) + "_" + pic_filename
                 # Change it to string to save to db
@@ -116,7 +116,7 @@ def dashboard():
                 flash('Error! Looks like there was a problem... try again!')
         else:
             flash('Error! User not found... try again!')
-    return render_template('users/dashboard.html', form=form)
+    return render_template('dashboard/index.html', form=form)
 
 
 @bp.route('/', methods=['GET', 'POST'])

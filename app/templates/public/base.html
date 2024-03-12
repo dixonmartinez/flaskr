@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {% endblock %} - FlaskApp</title>
+
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Candal Lora Family Offline
+    <link rel="stylesheet" href="css/Candal/Candal-Regular.ttf" />
+    <link rel="stylesheet" href="css/Lora/Lora-Italic-VariableFont_wght.ttf" />-->
+    <!-- Candal Lora Family -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Candal&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Slick Offline
+    <link rel="stylesheet" href="css/slick.css" />-->
+    <!-- Slick -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <!--Font Awesome Offline-->
+    <!--Font Awesome-->
+    <script
+      src="https://kit.fontawesome.com/899ccfbf88.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom Styling-->
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/style.css')}}"
+    />
+  </head>
+  <body>
+    {%include 'public/navbar.html'%} {% block content %} {% endblock %}
+    <!--{%include 'flash_messages.html'%}-->
+    {%include 'public/footer.html'%}
+  </body>
+</html>

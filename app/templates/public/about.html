@@ -1,0 +1,37 @@
+{% extends 'public/public.html' %} {% block title %}Home{% endblock %} {% block
+content %}
+<!-- Page Wraper-->
+<div class="page-wrapper">
+  <!-- Content -->
+  <div class="content clearfix">
+    <!--// Main Content-->
+    <div class="main-content">
+      <h1 class="recent-post-title">About</h1>
+      <div class="post clearfix">
+        <img
+          src="{{url_for('static', filename='images/Post.png')}}"
+          alt=""
+          class="post-image"
+        />
+        <div class="post-preview">
+          <h2>
+            <a href="single.html"
+              >The strong and sweetest songs yet remain to be sung</a
+            >
+          </h2>
+          <i class="far fa-user"></i>Awa Melvine &nbsp;
+          <i class="far fa-calendar"></i>Mar 8, 2024
+        </div>
+        <p class="preview-text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
+          blanditiis eligendi veniam assumenda iure id.
+        </p>
+        <a href="single.html" class="btn read-more">Read More</a>
+      </div>
+    </div>
+    <!--// Main Content-->
+  </div>
+  <!--// Content-->
+</div>
+<!--// Page Wraper-->
+{% endblock %}
