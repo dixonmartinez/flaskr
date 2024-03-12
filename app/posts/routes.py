@@ -8,6 +8,8 @@ from app.models.posts import Posts
 from app.web_forms import PostForm, SearchForm
 from flask_login import current_user
 
+from slugify import slugify
+
 
 @bp.route('/categories/')
 def categories():
@@ -38,7 +40,7 @@ def add_post():
     if form.validate_on_submit():
         title = form.title.data
         content = form.content.data
-        slug = form.slug.data
+        slug = slugify(form.title.data)
         author = current_user.id
         # clear the form
         form.title.data = ''

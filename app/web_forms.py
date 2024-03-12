@@ -34,7 +34,7 @@ class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = CKEditorField('Content', validators=[
         DataRequired()])
-    slug = StringField('Slug', validators=[DataRequired()])
+    slug = StringField('Slug')
     author_id = StringField('Author')
     submit = SubmitField('Save Post')
 
