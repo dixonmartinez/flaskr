@@ -126,7 +126,7 @@ content %}
         />
         <div class="post-preview">
           <h2>
-            <a href="single.html"
+            <a href="{{url_for('main.single', id=1)}}"
               >The strong and sweetest songs yet remain to be sung</a
             >
           </h2>
@@ -137,7 +137,9 @@ content %}
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
           blanditiis eligendi veniam assumenda iure id.
         </p>
-        <a href="single.html" class="btn read-more">Read More</a>
+        <a href="{{url_for('main.single', id=1)}}" class="btn read-more"
+          >Read More</a
+        >
       </div>
 
       <div class="post clearfix">
@@ -238,6 +240,6 @@ content %}
   <!--// Content-->
 </div>
 <!--// Page Wraper-->
-{% endblock %} {%block js_scripts%}
+{% endblock %} {% block js_scripts %}
 <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
 {%endblock%}

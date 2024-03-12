@@ -27,21 +27,7 @@
         <li><a class="logout" href="{{url_for('users.logout')}}">Logout</a></li>
       </ul>
     </li>
-    <li>
-      <a href="{{url_for('tutorial.index')}}" class="nav-link px-2 text-white"
-        >Name</a
-      >
-    </li>
-    <li>
-      <a href="{{url_for('users.index')}}" class="nav-link px-2 text-white"
-        >Users</a
-      >
-    </li>
-    <li>
-      <a href="{{url_for('posts.index')}}" class="nav-link px-2 text-white"
-        >Posts</a
-      >
-    </li>
+    
     {% else %}
     <li>
       <a href="{{url_for('users.login')}}">Login</a>

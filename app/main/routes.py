@@ -15,3 +15,8 @@ def about():
 @bp.route('/services')
 def services():
     return render_template('public/services.html')
+
+
+@bp.route('/single/<int:id>')
+def single(id):
+    return render_template('public/single.html')
