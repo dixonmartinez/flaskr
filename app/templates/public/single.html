@@ -18,9 +18,12 @@
     <div class="main-content-wrapper">
       <div class="main-content single">
         <h1 class="post-title">{{post.title}}</h1>
-        <div class="post-content">
-          <p>{{post.content | escape}}</p>
-        </div>
+        <small
+          >By: {{post.author.name}} <br />
+          Publish: {{post.date_posted.strftime('%Y-%m-%d')}}</small
+        ><br /><br /><br />
+        <div class="post-content clearfix">{{post.content| safe}}</div>
+        <br />
       </div>
     </div>
     <!--// Main Content-->

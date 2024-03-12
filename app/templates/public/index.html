@@ -131,7 +131,8 @@ content %}
             >
           </h2>
           <i class="far fa-user"></i>{{post.author.name}}&nbsp;
-          <i class="far fa-calendar"></i>{{post.date_posted}}&nbsp;Mar 8, 2024
+          <i class="far fa-calendar"></i
+          >{{post.date_posted.strftime('%Y-%m-%d')}}
         </div>
         <p class="preview-text">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
