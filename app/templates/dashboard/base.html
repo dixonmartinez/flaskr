@@ -34,7 +34,25 @@
     />
   </head>
   <body>
-    {%include 'dashboard/navbar.html'%} {% block content %} {% endblock %}
+    {%include 'dashboard/navbar.html'%}
+    <!-- Admin Page Wraper-->
+    <div class="admin-wrapper">
+      <!-- Left Sidebar -->
+      <div class="left-sidebar">
+        <ul>
+          <li><a href="{{url_for('users.dashboard')}}">Dashboard</a></li>
+          <li><a href="{{url_for('posts.index')}}">Manage Posts</a></li>
+          <li><a href="{{url_for('users.index')}}">Manage Users</a></li>
+          <li><a href="../topics/index.html">Manage Topics</a></li>
+        </ul>
+      </div>
+      <!-- // Left Sidebar -->
+      <!-- Admin Content -->
+      <div class="admin-content">{% block content %} {% endblock %}</div>
+      <!-- // Admin Content-->
+    </div>
+    <!--// Admin Page Wraper-->
+    
 
     <!-- JQuery Offline
     <script src="js/jquery-3.7.1.min.js"></script>-->
