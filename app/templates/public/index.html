@@ -24,7 +24,6 @@ content %}
           <i class="far fa-calendar"></i>Mar 8, 2024
         </div>
       </div>
-
       <div class="post">
         <img
           src="{{url_for('static', filename='images/Post.png')}}"
@@ -118,6 +117,7 @@ content %}
     <!--// Main Content-->
     <div class="main-content">
       <h1 class="recent-post-title">Recent Posts</h1>
+      {% for post in posts %}
       <div class="post clearfix">
         <img
           src="{{url_for('static', filename='images/Post.png')}}"
@@ -126,89 +126,24 @@ content %}
         />
         <div class="post-preview">
           <h2>
-            <a href="{{url_for('main.single', id=1)}}"
-              >The strong and sweetest songs yet remain to be sung</a
+            <a href="{{url_for('main.single', id=post['id'])}}"
+              >{{post.title}}</a
             >
           </h2>
-          <i class="far fa-user"></i>Awa Melvine &nbsp;
-          <i class="far fa-calendar"></i>Mar 8, 2024
+          <i class="far fa-user"></i>{{post.author.name}}&nbsp;
+          <i class="far fa-calendar"></i>{{post.date_posted}}&nbsp;Mar 8, 2024
         </div>
         <p class="preview-text">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
           blanditiis eligendi veniam assumenda iure id.
         </p>
-        <a href="{{url_for('main.single', id=1)}}" class="btn read-more"
+        <a
+          href="{{url_for('main.single', id=post['id'])}}"
+          class="btn read-more"
           >Read More</a
         >
       </div>
-
-      <div class="post clearfix">
-        <img
-          src="{{url_for('static', filename='images/Post.png')}}"
-          alt=""
-          class="post-image"
-        />
-        <div class="post-preview">
-          <h2>
-            <a href="single.html"
-              >The strong and sweetest songs yet remain to be sung</a
-            >
-          </h2>
-          <i class="far fa-user"></i>Awa Melvine &nbsp;
-          <i class="far fa-calendar"></i>Mar 8, 2024
-        </div>
-        <p class="preview-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
-          blanditiis eligendi veniam assumenda iure id.
-        </p>
-        <a href="single.html" class="btn read-more">Read More</a>
-      </div>
-
-      <div class="post clearfix">
-        <img
-          src="{{url_for('static', filename='images/Post.png')}}"
-          alt=""
-          class="post-image"
-        />
-        <div class="post-preview">
-          <h2>
-            <a href="single.html"
-              >The strong and sweetest songs yet remain to be sung</a
-            >
-          </h2>
-          <i class="far fa-user"></i>Awa Melvine &nbsp;
-          <i class="far fa-calendar"></i>Mar 8, 2024
-        </div>
-        <p class="preview-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
-          blanditiis eligendi veniam assumenda iure id.
-        </p>
-        <a href="single.html" class="btn read-more">Read More</a>
-      </div>
-
-      <div class="post clearfix">
-        <img
-          src="{{url_for('static', filename='images/Post.png')}}"
-          alt=""
-          class="post-image"
-        />
-        <div class="post-preview">
-          <h2>
-            <a href="single.html"
-              >The strong and sweetest songs yet remain to be sung</a
-            >
-          </h2>
-          <i class="far fa-user"></i>Awa Melvine &nbsp;
-          <i class="far fa-calendar"></i>Mar 8, 2024
-        </div>
-        <p class="preview-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Est earum
-          blanditiis eligendi veniam assumenda iure id, delectus nam commodi
-          reprehenderit fugit aliquid fuga deleniti architecto aperiam accusamus
-          quae unde ut.
-        </p>
-        <a href="single.html" class="btn read-more">Read More</a>
-      </div>
+      {%endfor%}
     </div>
     <!--// Main Content-->
     <div class="sidebar">

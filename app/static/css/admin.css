@@ -11,7 +11,7 @@ header {
 .admin-wrapper .left-sidebar {
     flex: 2;
     height: 100%;
-    background-color: #234a57;
+    background: #234a57;
 }
 
 .admin-wrapper .left-sidebar ul {
@@ -34,13 +34,11 @@ header {
     height: 100%;
     padding: 40px 100px 100px;
     overflow-y: scroll;
-    border: solid 1px red;
 }
 
-.admin-content .content .page-title {
-    border: 1px solid red;
+.admin-content .page-title {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 table {

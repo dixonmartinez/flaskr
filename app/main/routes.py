@@ -1,10 +1,12 @@
 from app.main import bp
 from flask import render_template
+from app.models.posts import Posts
 
 
 @bp.route('/')
 def index():
-    return render_template('public/index.html')
+    posts = Posts.query.order_by(Posts.date_posted)
+    return render_template('public/index.html', posts=posts)
 
 
 @bp.route('/about')
@@ -19,4 +21,5 @@ def services():
 
 @bp.route('/single/<int:id>')
 def single(id):
-    return render_template('public/single.html')
+    post = Posts.query.get_or_404(id)
+    return render_template('public/single.html', post=post)

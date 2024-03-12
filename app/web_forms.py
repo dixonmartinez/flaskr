@@ -36,7 +36,7 @@ class PostForm(FlaskForm):
         DataRequired()])
     slug = StringField('Slug', validators=[DataRequired()])
     author_id = StringField('Author')
-    submit = SubmitField('Submit')
+    submit = SubmitField('Save Post')
 
 # create a search form
 

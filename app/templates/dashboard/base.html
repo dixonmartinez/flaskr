@@ -64,6 +64,6 @@
       referrerpolicy="no-referrer"
     ></script>
     <!--Custom script-->
-    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    {%block js_scripts %}{%endblock%}
   </body>
 </html>

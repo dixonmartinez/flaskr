@@ -1,0 +1,10 @@
+{%extends 'dashboard/base.html'%} {%block content%}
+<div class="button-group">
+  <a href="{{ url_for('posts.add_post') }}" class="btn btn-big">Add Post</a>
+  <a href="{{ url_for('posts.index') }}" class="btn btn-big">Manage Posts</a>
+</div>
+<div class="content">
+  <h2 class="page-title">Manage Posts</h2>
+  {%block posts_content %} {%endblock%}
+</div>
+{%endblock%}

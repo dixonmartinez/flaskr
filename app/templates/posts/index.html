@@ -1,75 +1,30 @@
-{%extends 'dashboard/base.html'%} {%block content%}
-
-<div class="button-group">
-  <a href="{{ url_for('posts.add_post') }}" class="btn btn-big">Add Post</a>
-  <a href="index.html" class="btn btn-big">Manage Posts</a>
-</div>
-<div class="content">
-  <h2 class="page-title">Manage Posts</h2>
-
-  <table>
-    <thead>
-      <th>SN</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th colspan="3">Action</th>
-    </thead>
-    <tbody>
-      {%for post in posts%}
-      <tr>
-        <td>1</td>
-        <td>{{post.title}}</td>
-        <td>{{post.author.name}}</td>
-        <td>
-          <a href="{{ url_for('posts.update', id=post['id']) }}" class="edit"
-            >edit</a
-          >
-        </td>
-        <td>
-          <a href="{{url_for('posts.delete', id=post['id'])}}" class="delete"
-            >delete</a
-          >
-        </td>
-        <td><a href="#" class="publish">publish</a></td>
-      </tr>
-      {%endfor%}
-    </tbody>
-  </table>
-</div>
-
-<div class="card">
-  <div class="card-header">
-    <h2>{% block title %}Posts{% endblock %}</h2>
-    <a class="btn btn-secondary btn-sm" href="{{ url_for('posts.add_post') }}"
-      >New</a
-    >
-  </div>
-  <div class="card-body">
+{%extends 'posts/base.html'%} {%block posts_content%}
+<table>
+  <thead>
+    <th>SN</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th colspan="3">Action</th>
+  </thead>
+  <tbody>
     {%for post in posts%}
-    <h2>
-      <a href="{{url_for('posts.show', id=post['id'])}}">{{post.title }}</a>
-    </h2>
-
-    <div class="about">
-      by {{ post.author.name }} on {{ post['date_posted'].strftime('%Y-%m-%d')
-      }}
-    </div>
-
-    {{post.slug }} <br />
-    {{post.content | safe}} <br />
-    {%if current_user.id == post.author_id%}
-    <a
-      class="btn btn-secondary btn-sm"
-      href="{{ url_for('posts.update', id=post['id']) }}"
-      >Edit</a
-    >
-    <a
-      href="{{url_for('posts.delete', id=post['id'])}}"
-      class="btn btn-danger btn-sm"
-      >Delete</a
-    >
-    {%endif%} {%endfor%}
-  </div>
-</div>
-
+    <tr>
+      <td>1</td>
+      <td>{{post.title}}</td>
+      <td>{{post.author.name}}</td>
+      <td>
+        <a href="{{ url_for('posts.update', id=post['id']) }}" class="edit"
+          >edit</a
+        >
+      </td>
+      <td>
+        <a href="{{url_for('posts.delete', id=post['id'])}}" class="delete"
+          >delete</a
+        >
+      </td>
+      <td><a href="#" class="publish">publish</a></td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
 {%endblock%}

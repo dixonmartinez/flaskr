@@ -1,22 +1,20 @@
-{% extends 'dashboard/base.html' %} {% block content %}
-
-<div class="card">
-  <div class="card-header">
-    <h2>{% block title %}Register Post{% endblock %}</h2>
+{% extends 'posts/base.html' %} {% block posts_content %}
+<form method="post">
+  {{form.hidden_tag()}}
+  <div>{{form.title.label(class="")}} {{form.title(class="text-input")}}</div>
+  <div>
+    {{form.content.label(class="")}}{{form.content(class="text-input")}}
   </div>
-  <div class="card-body">
-    <form method="post">
-      {{form.hidden_tag()}} {{form.title.label(class="form-label")}}
-      {{form.title(class="form-control")}}
-      {{form.content.label(class="form-label")}}
-      {{form.content(class="form-control")}}
-      {{form.slug.label(class="form-label")}}
-      {{form.slug(class="form-control")}}
-      <br />
-      {{form.submit(class="btn btn-primary")}}
-    </form>
-    {{ckeditor.load()}} {{ckeditor.config(name='content')}}
+  <div>{{form.slug.label(class="")}}{{form.slug(class="text-input")}}</div>
+  <div>
+    <select name="topic" id="topic" class="text-input">
+      <option value="Poetry">Poetry</option>
+      <option value="Life Lessons">Life Lessons</option>
+      <option value="Poetry">Poetry</option>
+      <option value="Poetry">Poetry</option>
+    </select>
   </div>
-</div>
-
+  {{form.submit(class="btn btn-big")}} {{ckeditor.load()}}
+  {{ckeditor.config(name='content')}}
+</form>
 {% endblock %}
