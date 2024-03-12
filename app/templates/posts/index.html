@@ -1,10 +1,42 @@
-{%extends 'base.html'%} {%block content%} {%for post in posts%}
-<div class="shadow p-3 mb-5 bg-body rounded">
-  <h2>{{post.title}}</h2>
-  <small>By: {{post.author.name}}<br />{{post.date_posted}}</small
-  ><br /><br />{{post.content| safe}} <br /><br />{{post.about_author}}
+{%extends 'dashboard/base.html'%} {%block content%}
+
+<div class="button-group">
+  <a href="{{ url_for('posts.add_post') }}" class="btn btn-big">Add Post</a>
+  <a href="index.html" class="btn btn-big">Manage Posts</a>
 </div>
-{%endfor%}
+<div class="content">
+  <h2 class="page-title">Manage Posts</h2>
+
+  <table>
+    <thead>
+      <th>SN</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th colspan="3">Action</th>
+    </thead>
+    <tbody>
+      {%for post in posts%}
+      <tr>
+        <td>1</td>
+        <td>{{post.title}}</td>
+        <td>{{post.author.name}}</td>
+        <td>
+          <a href="{{ url_for('posts.update', id=post['id']) }}" class="edit"
+            >edit</a
+          >
+        </td>
+        <td>
+          <a href="{{url_for('posts.delete', id=post['id'])}}" class="delete"
+            >delete</a
+          >
+        </td>
+        <td><a href="#" class="publish">publish</a></td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+
 <div class="card">
   <div class="card-header">
     <h2>{% block title %}Posts{% endblock %}</h2>
