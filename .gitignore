@@ -12,3 +12,7 @@ build/
 .ssh
 *.db
 *.code-workspace
+
+.idea
+
+app/static/ckeditor/*

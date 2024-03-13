@@ -14,7 +14,8 @@
       <option value="Poetry">Poetry</option>
     </select>
   </div>
-  {{form.submit(class="btn btn-big")}} {{ckeditor.load()}}
-  {{ckeditor.config(name='content')}}
+  {{form.submit(class="btn btn-big")}} {{ckeditor.load(custom_url='ckeditor/static/ckeditor.js')}}
+  {{ckeditor.config(name='content', language='es', height=600,
+  imageUploadUrl='images',filebrowserBrowseUrl='images')}}
 </form>
 {% endblock %}
